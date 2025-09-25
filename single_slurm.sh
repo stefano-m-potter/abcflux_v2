@@ -26,9 +26,9 @@
 # python /home/spotter5/anna_v/v2/cat_weighted_v2.py 
 # python /home/spotter5/anna_v/v2/cat_v2_feature_selection.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_esa_lc.py 
-python /home/spotter5/anna_v/v2/cat_v2_plot_kyle_lc.py 
+# python /home/spotter5/anna_v/v2/cat_v2_plot_kyle_lc.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_abc_lc.py 
-# python /home/spotter5/anna_v/v2/cat_v2_plot_bawld_lc.py 
+python /home/spotter5/anna_v/v2/cat_v2_plot_bawld_lc.py 
 
 
 

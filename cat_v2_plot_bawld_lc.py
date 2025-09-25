@@ -27,7 +27,7 @@ def run_loso_analysis(target_col):
     file_path = "/explore/nobackup/people/spotter5/anna_v/v2/v2_model_training_final.csv"
     df = pd.read_csv(file_path)
     df = df.drop('land_cover', axis =1)
-    df = df.rename(columns = {'bawld_class', 'land_cover'})
+    df = df.rename(columns = {'bawld_class':'land_cover'})
     
     df['land_cover'] = df['land_cover'].astype(str)
     df['month'] = df['month'].astype(int)
