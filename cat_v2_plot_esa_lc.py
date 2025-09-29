@@ -83,7 +83,8 @@ def run_loso_analysis(target_col):
         print(f"  Processing site: {test_site}...")
         train_idx = df["site_reference"] != test_site
         test_idx  = df["site_reference"] == test_site
-        if test_idx.sum() < 1: continue
+        if test_idx.sum() < 1:
+            continue
 
         X_train, y_train = X.loc[train_idx], y.loc[train_idx]
         X_test,  y_test  = X.loc[test_idx], y.loc[test_idx]
@@ -98,7 +99,7 @@ def run_loso_analysis(target_col):
         y_pred = model.predict(X_test)
 
         site_df = pd.DataFrame({"Site": test_site, "Date": dates_test,
-                                "Observed": y_test, "Predicted": y_pred})
+                                "Observed": y_test.values, "Predicted": y_pred})
         all_preds_df_list.append(site_df)
 
         rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -116,11 +117,61 @@ def run_loso_analysis(target_col):
     results_df.to_csv(os.path.join(loocv_out_path, f'catboost_results_{target_col}_cat.csv'), index=False)
     all_preds_df.to_csv(os.path.join(loocv_out_path, f'catboost_predictions_{target_col}_cat.csv'), index=False)
 
-    # Report pooled metrics
+    # --- Pooled metrics (across all left-out predictions) ---
     rmse_all = np.sqrt(mean_squared_error(all_preds_df["Observed"], all_preds_df["Predicted"]))
     r2_all   = r2_score(all_preds_df["Observed"], all_preds_df["Predicted"])
     mae_all  = mean_absolute_error(all_preds_df["Observed"], all_preds_df["Predicted"])
     print(f"Pooled R²: {r2_all:.4f}, RMSE: {rmse_all:.4f}, MAE: {mae_all:.4f}")
+
+    # --- Mean/Median metrics across sites ---
+    mean_r2 = results_df['R2'].mean()
+    median_r2 = results_df['R2'].median()
+    mean_rmse = results_df['RMSE'].mean()
+    median_rmse = results_df['RMSE'].median()
+    mean_mae = results_df['MAE'].mean()
+    median_mae = results_df['MAE'].median()
+
+    print(f"Mean R²: {mean_r2:.4f}, Median R²: {median_r2:.4f}")
+    print(f"Mean RMSE: {mean_rmse:.4f}, Median RMSE: {median_rmse:.4f}")
+    print(f"Mean MAE: {mean_mae:.4f}, Median MAE: {median_mae:.4f}")
+
+    # --- Save a compact summary CSV (Pooled / Mean / Median) ---
+    summary_df = pd.DataFrame({
+        "Metric": ["R2", "RMSE", "MAE"],
+        "Pooled": [r2_all, rmse_all, mae_all],
+        "Mean_by_site": [mean_r2, mean_rmse, mean_mae],
+        "Median_by_site": [median_r2, median_rmse, median_mae],
+    })
+    summary_csv_path = os.path.join(loocv_out_path, f'catboost_metrics_summary_{target_col}.csv')
+    summary_df.to_csv(summary_csv_path, index=False)
+
+    # --- Plot: side-by-side bars for each metric (R2, RMSE, MAE) ---
+    # Separate subplots so the differing scales aren't misleading.
+    print("Creating summary metrics plot (pooled vs mean vs median)...")
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4), constrained_layout=True)
+    metrics = ["R2", "RMSE", "MAE"]
+    pooled_vals = [r2_all, rmse_all, mae_all]
+    mean_vals   = [mean_r2, mean_rmse, mean_mae]
+    median_vals = [median_r2, median_rmse, median_mae]
+
+    for i, (ax, m, p, mu, md) in enumerate(zip(axes, metrics, pooled_vals, mean_vals, median_vals)):
+        x = np.arange(3)
+        bars = ax.bar(x, [p, mu, md], width=0.6, tick_label=["Pooled", "Mean", "Median"])
+        ax.set_title(m)
+        ax.grid(axis='y', linestyle='--', alpha=0.4)
+        # Add value labels on bars
+        for b in bars:
+            ax.annotate(f"{b.get_height():.3g}",
+                        xy=(b.get_x() + b.get_width()/2, b.get_height()),
+                        xytext=(0, 4), textcoords="offset points",
+                        ha='center', va='bottom', fontsize=9)
+
+    fig.suptitle(f"LOSO Metrics Summary — {target_col}", fontsize=14)
+    summary_plot_path = os.path.join(figures_path, f'catboost_{target_col}_metrics_summary.png')
+    plt.savefig(summary_plot_path, dpi=300, bbox_inches='tight')
+    plt.close(fig)
+    print(f"  Saved: {summary_plot_path}")
+    print(f"  Saved: {summary_csv_path}")
 
     # Train and save final model
     final_model = CatBoostRegressor(
