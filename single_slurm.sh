@@ -19,6 +19,9 @@
 # python /home/spotter5/anna_v/v2/cat_v2.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_no_lc.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot.py 
+# python /home/spotter5/anna_v/v2/cat_v2_plot_methane.py 
+python /home/spotter5/anna_v/v2/cat_v2_plot_methane_0.py 
+
 # python /home/spotter5/anna_v/v2/cat_v2_plot_lag.py 
 # python /home/spotter5/anna_v/v2/cat_16_v2.py 
 # python /home/spotter5/anna_v/v2/cat_lag_v2.py 
@@ -27,7 +30,7 @@
 # python /home/spotter5/anna_v/v2/cat_v2_feature_selection.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_esa_lc.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_kyle_lc.py 
-python /home/spotter5/anna_v/v2/cat_v2_plot_abc_lc.py 
+# python /home/spotter5/anna_v/v2/cat_v2_plot_abc_lc.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_bawld_lc.py 
 
 
