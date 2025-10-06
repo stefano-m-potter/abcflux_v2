@@ -34,15 +34,19 @@ def run_loso_analysis(target_col):
     # 3. Define predictors and categorical features
     feature_cols = [
         'EVI', 'NDVI', 'sur_refl_b01', 'sur_refl_b02', 'sur_refl_b03',
-        'sur_refl_b07', 'NDWI', 'pdsi', 'srad', 'tmean_C', 'vap', 'vs',
-        'bdod_0_100cm', 'cec_0_100cm', 'cfvo_0_100cm', 'clay_0_100cm', 'swe',
+        'sur_refl_b07', 'NDWI', 'pdsi', 'srad', 'tmean_C', 'vap', 'vs', 'swe',
+        'bdod_0_100cm', 'cec_0_100cm', 'cfvo_0_100cm', 'clay_0_100cm',
         'nitrogen_0_100cm', 'ocd_0_100cm', 'phh2o_0_100cm', 'sand_0_100cm',
         'silt_0_100cm', 'soc_0_100cm', 'co2_cont', 'ALT',
         'land_cover', 'month',
         'lai', 'fpar', 'Percent_NonTree_Vegetation',
         'Percent_NonVegetated', 'Percent_Tree_Cover', 'sm_surface', 'sm_rootzone',
-        'snow_cover',
-        'snow_depth'#, 'NDSI_snow_cover'
+        'snow_cover', 'snow_depth', 'soil_temperature_level_1',
+        'N_N_0_100cm', 'alpha_ALFA_0_100cm', 'crit_wilt_CRIT-WILT_0_100cm', 
+        'field_crit_FIELD-CRIT_0_100cm', 'ksat_Ksat_0_100cm', 'ormc_ORMC_0_100cm', 
+        'satfield_SAT-FIELD_0_100cm', 'stc_STC_0_100cm', 'wcavail_WCavail_0_100cm', 
+        'wcpf2_WCpF2_0_100cm', 'wcpf3_WCpF3_0_100cm', 'wcpf4_2_WCpF4-2_0_100cm', 
+        'wcres_WCres_0_100cm', 'wcsat_WCsat_0_100cm'
     ]
     categorical_features = ['land_cover', 'month']
 

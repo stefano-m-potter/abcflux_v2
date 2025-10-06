@@ -18,9 +18,9 @@
 # python /home/spotter5/anna_v/v2/cat_v2_tuned.py 
 # python /home/spotter5/anna_v/v2/cat_v2.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_no_lc.py 
-# python /home/spotter5/anna_v/v2/cat_v2_plot.py 
+python /home/spotter5/anna_v/v2/cat_v2_plot.py 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_methane.py 
-python /home/spotter5/anna_v/v2/cat_v2_plot_methane_0.py 
+# python /home/spotter5/anna_v/v2/cat_v2_plot_methane_0.py 
 
 # python /home/spotter5/anna_v/v2/cat_v2_plot_lag.py 
 # python /home/spotter5/anna_v/v2/cat_16_v2.py 
