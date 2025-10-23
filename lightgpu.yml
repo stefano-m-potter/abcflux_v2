@@ -1,0 +1,38 @@
+name: lightgpu
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+
+  # Your Python stack
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - joblib
+  - shap
+  - optuna
+  - ipykernel
+
+  # Build tools & compilers
+  - cmake
+  - ninja
+  - git
+  - c-compiler
+  - cxx-compiler
+
+  # CUDA 11.8 (conda-forge):
+  # - cudatoolkit: runtime libs (cudart, cublas, etc.)
+  # - cuda-nvcc : CUDA compiler (nvcc)
+  - cudatoolkit=11.8
+  - cuda-nvcc=11.8
+
+  # (pip build helpers needed because we’ll use --no-build-isolation)
+  - pip
+  - pip:
+      - scikit-build-core
+      - setuptools
+      - wheel
+      - jsonpickle
+
